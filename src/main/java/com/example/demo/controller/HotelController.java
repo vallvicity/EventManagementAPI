@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Hotel;
 import com.example.demo.service.HotelService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,9 +37,10 @@ public class HotelController {
         return hotelService.updateHotel(id, hotel);
     }
 
-    @DeleteMapping
-    public void deleteHotel(@RequestBody Hotel hotel) {
-        Long idFound = hotel.getId();
-        hotelService.deleteOnaHotel(idFound);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteHotel(@PathVariable Long id) {
+        hotelService.deleteOneHotel(id);
+        return ResponseEntity.noContent().build();
+
     }
 }

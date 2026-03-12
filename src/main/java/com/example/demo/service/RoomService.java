@@ -49,6 +49,9 @@ public class RoomService {
     }
 
     public void deleteOneRoom(Long id) {
+        if(!roomRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Room not found");
+        }
         roomRepository.deleteById(id);
     }
 }

@@ -50,7 +50,10 @@ public class HotelService {
         return hotelRepository.save(hotelToUpdate);
     }
 
-    public void deleteOnaHotel(Long id) {
+    public void deleteOneHotel(Long id) {
+        if(!hotelRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Hotel not found");
+        }
         hotelRepository.deleteById(id);
     }
 

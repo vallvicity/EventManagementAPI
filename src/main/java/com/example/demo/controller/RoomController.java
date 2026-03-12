@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Room;
 import com.example.demo.service.RoomService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,9 +37,9 @@ public class RoomController {
         return roomService.updateRoom(id, room);
     }
 
-    @DeleteMapping
-    public void deleteRoom( @RequestBody Room room) {
-        Long idFound = room.getId();
-        roomService.deleteOneRoom(idFound);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteRoom(@PathVariable Long id) {
+        roomService.deleteOneRoom(id);
+        return ResponseEntity.noContent().build();
     }
 }

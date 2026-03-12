@@ -55,9 +55,10 @@ public class EventService {
     }
 
     public void deleteOneEvent(Long id) {
-        //Event eventFound = eventRepository.findById(id).orElseThrow();
+        if(!eventRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
+        }
         eventRepository.deleteById(id);
     }
-
 
 }
