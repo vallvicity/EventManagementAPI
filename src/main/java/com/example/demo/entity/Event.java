@@ -20,7 +20,8 @@ public class Event {
     @OneToMany
     private List<Hotel> hotel;
 
-    //private User organizer;
+    @ManyToOne
+    private User organizer;
 
     public Event() {
     }
