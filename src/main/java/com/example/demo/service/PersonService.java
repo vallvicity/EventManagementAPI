@@ -30,5 +30,28 @@ public class PersonService {
         return personRepository.findAll();
     }
 
+    public Person updatePerson(Long id, Person person) {
+        Person personToUpdate = this.getOnePerson(id);
+
+        if(person.getName() != null) {
+            personToUpdate.setName(person.getName());
+        }
+        if(person.getSurname() != null) {
+            personToUpdate.setSurname(person.getSurname());
+        }
+    //TODO: is this safe to do? To be able to change your email just like that?
+        if(person.getEmail() != null) {
+            personToUpdate.setEmail(person.getEmail());
+        }
+
+        return personRepository.save(personToUpdate);
+    }
+
+    public void deleteOnePerson(Long id) {
+        if(!personRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Person not found");
+        }
+        personRepository.deleteById(id);
+    }
 
 }

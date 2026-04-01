@@ -1,10 +1,7 @@
 package com.example.demo.entity;
 
 import com.example.demo.enums.Status;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
@@ -17,6 +14,10 @@ public class Booking {
     private LocalDate checkIn;
     private LocalDate checkout;
     private Status status;
+    @ManyToOne
+    @JoinColumn(name = "room_id")
+    private Room room;
+
 
     public Booking() {
     }

@@ -1,6 +1,9 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Room {
@@ -11,7 +14,11 @@ public class Room {
     private int capacity;
     @ManyToOne
     @JoinColumn(name = "hotel_id")
+    @JsonBackReference
     private Hotel hotel;
+
+    @OneToMany(mappedBy = "room")
+    private List<Booking> bookings;
 
     public Room(){
 
