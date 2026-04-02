@@ -12,7 +12,7 @@ public class Room {
     private Long id;
     private String name;
     private int capacity;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hotel_id")
     @JsonBackReference
     private Hotel hotel;

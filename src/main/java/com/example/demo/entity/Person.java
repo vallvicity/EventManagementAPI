@@ -2,6 +2,8 @@ package com.example.demo.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class Person {
     @Id
@@ -15,6 +17,9 @@ public class Person {
             nullable = false,
             unique = true)
     private String email;
+
+    @OneToMany(mappedBy = "attendee", cascade = CascadeType.ALL)
+    private List<Registration> registrations;
 
     public Person() {
     }

@@ -14,7 +14,7 @@ public class Booking {
     private LocalDate checkIn;
     private LocalDate checkout;
     private Status status;
-    @ManyToOne
+    @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
     private Room room;
 

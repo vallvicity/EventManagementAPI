@@ -17,11 +17,11 @@ public class Event {
     private LocalDate startDate;
     private LocalDate endDate;
     private int maxCapacity;
-    @OneToMany
-    private List<Hotel> hotel;
 
     @ManyToOne
     private User organizer;
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Registration> registrations;
 
     public Event() {
     }
