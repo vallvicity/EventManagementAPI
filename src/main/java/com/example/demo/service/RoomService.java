@@ -23,7 +23,8 @@ public class RoomService {
     }
 
     public Room createRoom(Room room, Long hotelId) {
-        Hotel hotel = hotelRepository.findById(hotelId).orElseThrow();
+        Hotel hotel = hotelRepository.findById(hotelId)
+                .orElseThrow(() -> new RuntimeException("Hotel not found"));
         room.setHotel(hotel);
         return roomRepository.save(room);
     }

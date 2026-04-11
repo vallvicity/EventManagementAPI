@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class Room {
     private Hotel hotel;
 
     @OneToMany(mappedBy = "room")
+    @JsonIgnore
     private List<Booking> bookings;
 
     public Room(){

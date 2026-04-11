@@ -4,6 +4,7 @@ import com.example.demo.enums.Status;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 public class Booking {
@@ -18,14 +19,19 @@ public class Booking {
     @JoinColumn(name = "room_id")
     private Room room;
 
+    @ManyToMany
+    private Set<Person> persons;
+
 
     public Booking() {
     }
 
-    public Booking(LocalDate checkIn, LocalDate checkout, Status status) {
+    public Booking(LocalDate checkIn, LocalDate checkout, Status status, Set<Person> persons, Room room) {
         this.checkIn = checkIn;
         this.checkout = checkout;
         this.status = status;
+        this.persons = persons;
+        this.room = room;
     }
 
     public Long getId() {
@@ -58,5 +64,21 @@ public class Booking {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
+    public Set<Person> getPersons() {
+        return persons;
+    }
+
+    public void setPersons(Set<Person> persons) {
+        this.persons = persons;
     }
 }
