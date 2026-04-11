@@ -17,9 +17,9 @@ public class RoomController {
         this.roomService = roomService;
     }
 
-    @PostMapping
-    public Room createRoom(@RequestBody Room room) {
-        return roomService.createRoom(room);
+    @PostMapping("/{hotelId}")
+    public Room createRoom(@RequestBody Room room, @PathVariable Long hotelId) {
+        return roomService.createRoom(room, hotelId);
     }
 
     @GetMapping

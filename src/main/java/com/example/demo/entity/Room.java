@@ -23,10 +23,11 @@ public class Room {
     public Room(){
 
     }
-    public Room(String name, int capacity, Hotel hotel) {
+    public Room(String name, int capacity, Hotel hotel, List<Booking> bookings) {
         this.name = name;
         this.capacity = capacity;
         this.hotel = hotel;
+        this.bookings = bookings;
     }
 
     public Long getId() {
@@ -55,5 +56,12 @@ public class Room {
 
     public void setHotel(Hotel hotel) {
         this.hotel = hotel;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
+    }
+    public List<Booking> getBookings() {
+        return bookings;
     }
 }

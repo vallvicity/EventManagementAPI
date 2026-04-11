@@ -15,7 +15,7 @@ public class Hotel {
     private int category;
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    @JsonIgnore
+    //@JsonIgnore
     private List<Room> rooms;
 
     public Hotel() {

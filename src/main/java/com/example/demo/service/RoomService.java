@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.Hotel;
 import com.example.demo.entity.Room;
+import com.example.demo.repository.HotelRepository;
 import com.example.demo.repository.RoomRepository;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
@@ -13,12 +15,16 @@ import java.util.List;
 public class RoomService {
 
     private RoomRepository roomRepository;
+    private HotelRepository hotelRepository;
 
-    public RoomService(RoomRepository roomRepository) {
+    public RoomService(RoomRepository roomRepository, HotelRepository hotelRepository) {
         this.roomRepository = roomRepository;
+        this.hotelRepository = hotelRepository;
     }
 
-    public Room createRoom(Room room) {
+    public Room createRoom(Room room, Long hotelId) {
+        Hotel hotel = hotelRepository.findById(hotelId).orElseThrow();
+        room.setHotel(hotel);
         return roomRepository.save(room);
     }
 
@@ -43,6 +49,9 @@ public class RoomService {
         }
         if (room.getHotel() != null) {
             roomToUpdate.setHotel(room.getHotel());
+        }
+        if (room.getBookings() != null) {
+            roomToUpdate.setBookings(room.getBookings());
         }
 
         return roomRepository.save(roomToUpdate);
