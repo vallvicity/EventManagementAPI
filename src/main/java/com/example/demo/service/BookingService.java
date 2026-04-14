@@ -12,10 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class BookingService {
@@ -50,9 +47,18 @@ public class BookingService {
         return booking;
     }
 
+    public List<Booking> getAllBookings() {
+        return bookingRepository.findAll();
+    }
+
+    public Booking getOneBooking(Long id) {
+        return bookingRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Booking not found."));
+    }
+
     public void deleteBooking(Long id) {
         if(bookingRepository.existsById(id)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Booking not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Booking not found.");
         }
         bookingRepository.deleteById(id);
     }

@@ -18,7 +18,8 @@ public class Event {
     private LocalDate endDate;
     private int maxCapacity;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "organizer_id")
     private User organizer;
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Registration> registrations;
@@ -26,11 +27,14 @@ public class Event {
     public Event() {
     }
 
-    public Event(String name, LocalDate startDate, LocalDate endDate, int maxCapacity) {
+    public Event(String name, LocalDate startDate, LocalDate endDate, int maxCapacity, List<Registration> registrations,
+     User organizer) {
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
         this.maxCapacity = maxCapacity;
+        this.registrations = registrations;
+        this.organizer = organizer;
     }
     public Long getId() {
         return id;
@@ -65,6 +69,22 @@ public class Event {
 
     public void setMaxCapacity(int maxCapacity) {
         this.maxCapacity = maxCapacity;
+    }
+
+    public User getOrganizer() {
+        return organizer;
+    }
+
+    public void setOrganizer(User organizer) {
+        this.organizer = organizer;
+    }
+
+    public List<Registration> getRegistrations() {
+        return registrations;
+    }
+
+    public void setRegistrations(List<Registration> registrations) {
+        this.registrations = registrations;
     }
 }
 

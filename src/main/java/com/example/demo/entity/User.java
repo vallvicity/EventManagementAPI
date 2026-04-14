@@ -1,9 +1,8 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class User {
@@ -13,6 +12,8 @@ public class User {
     private String name;
     private String email;
     private String role;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "organizer")
+    private List<Event> events;
 
     public User() {
     }

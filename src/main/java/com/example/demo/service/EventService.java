@@ -13,8 +13,11 @@ import java.util.Optional;
 @Service
 public class EventService {
 
-    @Autowired
     private EventRepository eventRepository;
+
+    public EventService(EventRepository eventRepository) {
+        this.eventRepository = eventRepository;
+    }
 
     public Event createEvent(Event event) {
         return eventRepository.save(event);
