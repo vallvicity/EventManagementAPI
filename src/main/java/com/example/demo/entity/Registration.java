@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.example.demo.enums.Status;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -16,11 +17,11 @@ public class Registration {
     @JoinColumn(name = "attendee_id")
     private Person attendee;
     private String registrationType;
-    private String status;
+    private Enum<Status> status;
 
     public Registration() {}
 
-    public Registration(Event event, Person attendee, String registrationType, String status) {
+    public Registration(Event event, Person attendee, String registrationType, Enum<Status> status) {
         this.event = event;
         this.attendee = attendee;
         this.registrationType = registrationType;
@@ -59,11 +60,11 @@ public class Registration {
         this.registrationType = registrationType;
     }
 
-    public String getStatus() {
+    public Enum<Status> getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Enum<Status> status) {
         this.status = status;
     }
 

@@ -49,6 +49,7 @@ public class EventService {
             eventFound.setEndDate(event.getEndDate());
         }
 
+        //TODO: problem with max Capacity != 0
         if(event.getMaxCapacity() != 0) {
             eventFound.setMaxCapacity(event.getMaxCapacity());
         }

@@ -18,9 +18,9 @@ public class BookingController {
         this.bookingService = bookingService;
     }
 
-    @PostMapping("/{personId}/{roomId}")
-    public Booking createBooking(@RequestBody BookingRequest bookingRequest, @PathVariable Long personId, @PathVariable Long roomId) {
-        return bookingService.createBooking(bookingRequest, personId, roomId);
+    @PostMapping
+    public Booking createBooking(@RequestBody BookingRequest bookingRequest) {
+        return bookingService.createBooking(bookingRequest);
     }
 
     @GetMapping

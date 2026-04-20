@@ -29,12 +29,14 @@ public class BookingService {
     }
 
     //TODO: Booking for more than one person, set checkin, checkout etc
-    public Booking createBooking(BookingRequest bookingRequest, Long personId, Long roomId) {
+    public Booking createBooking(BookingRequest bookingRequest) {
+
+        Long personId = bookingRequest.getPersonId();
 
         Person person = personRepository.findById(personId)
                 .orElseThrow(() -> new RuntimeException("Person not found"));
 
-        Room room = roomRepository.findById(roomId)
+        Room room = roomRepository.findById(bookingRequest.getRoomId())
                 .orElseThrow(() -> new RuntimeException("Room not found"));
 
         Set<Person> personsInBooking = new HashSet<>();
@@ -43,8 +45,10 @@ public class BookingService {
         Booking booking = new Booking();
         booking.setRoom(room);
         booking.setPersons(personsInBooking);
+        booking.setCheckIn(bookingRequest.getCheckIn());
+        booking.setCheckout(bookingRequest.getCheckOut());
 
-        return booking;
+        return bookingRepository.save(booking);
     }
 
     public List<Booking> getAllBookings() {
@@ -55,6 +59,8 @@ public class BookingService {
         return bookingRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Booking not found."));
     }
+
+    //TODO: updateBooking
 
     public void deleteBooking(Long id) {
         if(bookingRepository.existsById(id)) {
