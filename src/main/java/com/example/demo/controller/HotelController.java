@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.AddRoomsToHotelRequest;
 import com.example.demo.entity.Hotel;
 import com.example.demo.service.HotelService;
 import org.springframework.http.ResponseEntity;
@@ -42,5 +43,12 @@ public class HotelController {
         hotelService.deleteOneHotel(id);
         return ResponseEntity.noContent().build();
 
+    }
+
+
+    @PostMapping("/{hotelId}")
+    public Hotel addRoomstoHotel(@PathVariable Long hotelId, @RequestParam int numberOfRooms,
+                                 @RequestBody AddRoomsToHotelRequest roomTemplate) {
+        return hotelService.addRoomsToHotel(hotelId, numberOfRooms, roomTemplate);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.RegistrationRequest;
+import com.example.demo.entity.Hotel;
 import com.example.demo.entity.Registration;
 import com.example.demo.service.RegistrationService;
 import jakarta.validation.Valid;
@@ -43,6 +44,7 @@ public class RegistrationController {
         registrationService.deleteRegistration(id);
         return ResponseEntity.noContent().build();
     }
+
 
 
 

@@ -7,6 +7,7 @@ import com.example.demo.entity.Registration;
 import com.example.demo.repository.EventRepository;
 import com.example.demo.repository.PersonRepository;
 import com.example.demo.repository.RegistrationRepository;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,7 @@ public class RegistrationService {
         this.eventRepository = eventRepository;
     }
 
-    public Registration createRegistration(RegistrationRequest request) {
+    public Registration createRegistration(@NotNull RegistrationRequest request) {
         Person attendee = personRepository.findById(request.getAttendeeId())
                 .orElseThrow(() -> new RuntimeException("Person not found"));
 

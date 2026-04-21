@@ -16,7 +16,7 @@ public class RegistrationRequest {
     private Long attendeeId;
     @NotNull
     private Long eventId;
-    @Enumerated(EnumType.STRING)
+
     private Status status;
 
     public Long getAttendeeId() {

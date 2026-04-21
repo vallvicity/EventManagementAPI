@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.AddRoomsToHotelRequest;
 import com.example.demo.entity.Hotel;
 import com.example.demo.entity.Room;
 import com.example.demo.repository.HotelRepository;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -57,13 +59,34 @@ public class HotelService {
         hotelRepository.deleteById(id);
     }
 
-    public Hotel addRoomsToHotel(Hotel hotel, int numberOfRooms, Room roomToAdd) {
+    public Hotel addRoomsToHotel(Long hotelId, int numberOfRooms, AddRoomsToHotelRequest roomTemplate) {
+        Hotel hotel = hotelRepository.findById(hotelId)
+                .orElseThrow(() -> new RuntimeException("Hotel not found"));
+
         List<Room> hotelRooms = hotel.getRooms();
-        for (int i = 0; i < numberOfRooms; i++) {
-            Room newRoom = roomRepository.save(roomToAdd);
-            hotelRooms.add(newRoom);
+
+        // To avoid a NullPointerException:
+        if (hotelRooms == null) {
+            hotelRooms = new ArrayList<>();
         }
+
+        List<Room> newRooms = new ArrayList<>();
+
+        for (int i = 0; i < numberOfRooms; i++) {
+            Room newRoom = new Room();
+
+            newRoom.setName(roomTemplate.getName());
+            newRoom.setCapacity(roomTemplate.getCapacity());
+            newRoom.setHotel(hotel);
+
+            newRooms.add(newRoom);
+        }
+        // saveAll() allows batching + avoid unnecessary flushes
+        roomRepository.saveAll(newRooms);
+
+        hotelRooms.addAll(newRooms);
         hotel.setRooms(hotelRooms);
+
         return hotelRepository.save(hotel);
     }
 }
