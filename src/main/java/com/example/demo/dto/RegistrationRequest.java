@@ -1,7 +1,8 @@
 package com.example.demo.dto;
 
 import com.example.demo.enums.Status;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -15,7 +16,8 @@ public class RegistrationRequest {
     private Long attendeeId;
     @NotNull
     private Long eventId;
-    private Enum<Status> status;
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     public Long getAttendeeId() {
         return attendeeId;
@@ -33,11 +35,11 @@ public class RegistrationRequest {
         this.eventId = eventId;
     }
 
-    public Enum<Status> getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(Enum<Status> status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 }

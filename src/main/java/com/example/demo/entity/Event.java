@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 
@@ -22,6 +23,7 @@ public class Event {
     @JoinColumn(name = "organizer_id")
     private User organizer;
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Registration> registrations;
 
     public Event() {

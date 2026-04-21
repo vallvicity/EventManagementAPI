@@ -1,6 +1,8 @@
 package com.example.demo.entity;
 
 import com.example.demo.enums.Status;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -12,16 +14,20 @@ public class Registration {
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "event_id")
+    @JsonBackReference
     private Event event;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "attendee_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     private Person attendee;
     private String registrationType;
-    private Enum<Status> status;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     public Registration() {}
 
-    public Registration(Event event, Person attendee, String registrationType, Enum<Status> status) {
+    public Registration(Event event, Person attendee, String registrationType, Status status) {
         this.event = event;
         this.attendee = attendee;
         this.registrationType = registrationType;
@@ -60,11 +66,11 @@ public class Registration {
         this.registrationType = registrationType;
     }
 
-    public Enum<Status> getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(Enum<Status> status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 

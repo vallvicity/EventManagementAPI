@@ -63,7 +63,7 @@ public class BookingService {
     //TODO: updateBooking
 
     public void deleteBooking(Long id) {
-        if(bookingRepository.existsById(id)) {
+        if(!bookingRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Booking not found.");
         }
         bookingRepository.deleteById(id);
