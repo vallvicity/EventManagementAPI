@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.dto.AddRoomsToHotelRequest;
 import com.example.demo.entity.Hotel;
 import com.example.demo.entity.Room;
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.HotelRepository;
 import com.example.demo.repository.RoomRepository;
 import org.springframework.http.HttpStatus;
@@ -29,7 +30,7 @@ public class HotelService {
 
     public Hotel getOneHotel(Long id) {
         return hotelRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Hotel not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Hotel not found with id " + id));
     }
 
     public List<Hotel> getAllHotels() {
