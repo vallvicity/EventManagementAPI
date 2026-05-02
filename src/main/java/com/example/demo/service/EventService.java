@@ -1,4 +1,5 @@
 package com.example.demo.service;
+import com.example.demo.dto.EventRequest;
 import com.example.demo.entity.Event;
 import com.example.demo.repository.EventRepository;
 import jakarta.transaction.Transactional;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +21,21 @@ public class EventService {
         this.eventRepository = eventRepository;
     }
 
-    public Event createEvent(Event event) {
+    public Event createEvent(EventRequest request) {
+        if (request.getStartDate().isBefore(LocalDate.now())) {
+            throw new RuntimeException("You cannot create an Event with start date in the past");
+        }
+        if (request.getStartDate().isAfter(request.getEndDate())) {
+            throw new RuntimeException("The end of the Event cannot be before the start date");
+        }
+
+        Event event = new Event();
+        event.setName(request.getName());
+        event.setStartDate(request.getStartDate());
+        event.setEndDate(request.getEndDate());
+        event.setMaxCapacity(request.getMaxCapacity());
+        event.setOrganizer(request.getOrganizer());
+
         return eventRepository.save(event);
     }
 

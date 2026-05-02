@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.EventRequest;
 import com.example.demo.entity.Event;
 import com.example.demo.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,8 @@ public class EventController {
     private EventService eventService;
 
     @PostMapping
-    public Event createEvent(@RequestBody Event event) {
-        return eventService.createEvent(event);
+    public Event createEvent(@RequestBody EventRequest request) {
+        return eventService.createEvent(request);
 
     }
 
