@@ -1,7 +1,10 @@
 package com.example.demo.service;
 import com.example.demo.dto.EventRequest;
 import com.example.demo.entity.Event;
+import com.example.demo.entity.User;
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.EventRepository;
+import com.example.demo.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,32 +19,33 @@ import java.util.Optional;
 public class EventService {
 
     private EventRepository eventRepository;
+    private UserRepository userRepository;
 
-    public EventService(EventRepository eventRepository) {
+    public EventService(EventRepository eventRepository, UserRepository userRepository) {
         this.eventRepository = eventRepository;
+        this.userRepository = userRepository;
     }
 
     public Event createEvent(EventRequest request) {
-        if (request.getStartDate().isBefore(LocalDate.now())) {
-            throw new RuntimeException("You cannot create an Event with start date in the past");
-        }
-        if (request.getStartDate().isAfter(request.getEndDate())) {
-            throw new RuntimeException("The end of the Event cannot be before the start date");
-        }
+        validateEventDates(request.getStartDate(), request.getEndDate());
+
+        User user = userRepository.findById(request.getOrganizerId())
+                .orElseThrow(() -> new ResourceNotFoundException("Organizer with id " + request.getOrganizerId() + " not found"));
 
         Event event = new Event();
         event.setName(request.getName());
         event.setStartDate(request.getStartDate());
         event.setEndDate(request.getEndDate());
         event.setMaxCapacity(request.getMaxCapacity());
-        event.setOrganizer(request.getOrganizer());
+        event.setOrganizer(user);
 
         return eventRepository.save(event);
     }
 
     public Event getOneEvent(Long id) {
         return eventRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Event with id "
+                        + id + " not found"));
     }
 
     public List<Event> getAllEvents() {
@@ -49,25 +53,36 @@ public class EventService {
     }
 
     @Transactional
-    public Event updateEvent(Long id, Event event) {
+    public Event updateEvent(Long id, EventRequest request) {
         Event eventFound = eventRepository.findById(id)
                 .orElseThrow(() ->new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found"));
 
-        if(event.getName() != null) {
-            eventFound.setName(event.getName());
+        if(request.getName() != null) {
+            eventFound.setName(request.getName());
         }
         //TODO: startDate cannot be after endDate
-        if(event.getStartDate() != null) {
-            eventFound.setStartDate(event.getStartDate());
+//        if(request.getStartDate() != null) {
+//            //event.setEndDate(eventFound.getEndDate());
+//            validateEventDates(request.getStartDate(), event.getEndDate());
+//            eventFound.setStartDate(event.getStartDate());
+//        }
+//
+//        if(event.getEndDate() != null) {
+//            event.setStartDate(eventFound.getStartDate());
+//            validateEventDates(event.getStartDate(), event.getEndDate());
+//            eventFound.setEndDate(event.getEndDate());
+//        }
+        if(request.getStartDate() != null || request.getEndDate() != null) {
+            LocalDate newStart = request.getStartDate() != null ? request.getStartDate() : eventFound.getStartDate();
+            LocalDate newEnd = request.getEndDate() != null ? request.getEndDate() : eventFound.getEndDate();
+
+            validateEventDates(newStart, newEnd);
+            eventFound.setStartDate(newStart);
+            eventFound.setEndDate(newEnd);
         }
 
-        if(event.getEndDate() != null) {
-            eventFound.setEndDate(event.getEndDate());
-        }
-
-        //TODO: problem with max Capacity != 0
-        if(event.getMaxCapacity() != 0) {
-            eventFound.setMaxCapacity(event.getMaxCapacity());
+        if(request.getMaxCapacity() != null) {
+            eventFound.setMaxCapacity(request.getMaxCapacity());
         }
 
         return eventRepository.save(eventFound);
@@ -79,6 +94,15 @@ public class EventService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
         }
         eventRepository.deleteById(id);
+    }
+
+    private void validateEventDates(LocalDate startDate, LocalDate endDate) {
+        if (startDate.isBefore(LocalDate.now())) {
+            throw new IllegalArgumentException("You cannot create an Event with start date in the past");
+        }
+        if (startDate.isAfter(endDate)) {
+            throw new IllegalArgumentException("The end of the Event cannot be before the start date");
+        }
     }
 
 }

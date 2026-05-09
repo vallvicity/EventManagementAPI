@@ -4,7 +4,7 @@ import com.example.demo.entity.Hotel;
 import com.example.demo.entity.Room;
 import com.example.demo.repository.HotelRepository;
 import com.example.demo.repository.RoomRepository;
-import org.jetbrains.annotations.NotNull;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;

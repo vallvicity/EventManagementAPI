@@ -12,6 +12,6 @@ public class EventRequest {
     private String name;
     private LocalDate startDate;
     private LocalDate endDate;
-    private int maxCapacity;
-    private User organizer;
+    private Integer maxCapacity;
+    private Long organizerId;
 }

@@ -7,7 +7,7 @@ import com.example.demo.entity.Registration;
 import com.example.demo.repository.EventRepository;
 import com.example.demo.repository.PersonRepository;
 import com.example.demo.repository.RegistrationRepository;
-import org.jetbrains.annotations.NotNull;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
