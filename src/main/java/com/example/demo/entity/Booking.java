@@ -19,19 +19,25 @@ public class Booking {
     @JoinColumn(name = "room_id")
     private Room room;
 
+    //TODO: JoinColumn para el ManytoMAny & inicializar colección (new HashSet) para evitar NPE
     @ManyToMany
     private Set<Person> persons;
+
+    @OneToOne
+    @JoinColumn(name = "registration_id")
+    private Registration registration;
 
 
     public Booking() {
     }
 
-    public Booking(LocalDate checkIn, LocalDate checkout, Status status, Set<Person> persons, Room room) {
+    public Booking(LocalDate checkIn, LocalDate checkout, Status status, Set<Person> persons, Room room, Registration registration) {
         this.checkIn = checkIn;
         this.checkout = checkout;
         this.status = status;
         this.persons = persons;
         this.room = room;
+        this.registration = registration;
     }
 
     public Long getId() {
@@ -68,6 +74,14 @@ public class Booking {
 
     public Room getRoom() {
         return room;
+    }
+
+    public Registration getRegistration() {
+        return registration;
+    }
+
+    public void setRegistration(Registration registration) {
+        this.registration = registration;
     }
 
     public void setRoom(Room room) {

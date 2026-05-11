@@ -25,6 +25,7 @@ public class Registration {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+
     public Registration() {}
 
     public Registration(Event event, Person attendee, String registrationType, Status status) {
@@ -73,6 +74,7 @@ public class Registration {
     public void setStatus(Status status) {
         this.status = status;
     }
+
 
     @Override
     public boolean equals(Object o) {

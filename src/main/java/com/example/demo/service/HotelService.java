@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.AddRoomsToHotelRequest;
+import com.example.demo.dto.request.AddRoomsToHotelRequest;
 import com.example.demo.entity.Hotel;
 import com.example.demo.entity.Room;
 import com.example.demo.exception.ResourceNotFoundException;

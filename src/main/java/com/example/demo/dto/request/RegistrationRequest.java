@@ -1,13 +1,10 @@
-package com.example.demo.dto;
+package com.example.demo.dto.request;
 
 import com.example.demo.enums.Status;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import jakarta.validation.constraints.NotNull;
 
-import static com.example.demo.enums.Status.PENDING;
 
 @Data
 @NoArgsConstructor

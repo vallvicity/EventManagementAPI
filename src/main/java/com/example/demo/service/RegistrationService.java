@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.RegistrationRequest;
+import com.example.demo.dto.request.RegistrationRequest;
 import com.example.demo.entity.Event;
 import com.example.demo.entity.Person;
 import com.example.demo.entity.Registration;

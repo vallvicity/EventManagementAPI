@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.BookingRequest;
+import com.example.demo.dto.request.BookingRequest;
 import com.example.demo.entity.Booking;
 import com.example.demo.service.BookingService;
 import org.springframework.http.ResponseEntity;

@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.EventRequest;
+import com.example.demo.dto.request.EventRequest;
 import com.example.demo.entity.Event;
 import com.example.demo.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
